@@ -35,7 +35,7 @@ public class ItemController {
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
 
-        itemService.saveItem(book);
+        itemService.saveItem(book); //else로 넘어가서 merge호출됨
         return "redirect:/";
     }
 
@@ -64,17 +64,21 @@ public class ItemController {
 
     @PostMapping("items/{itemId}/edit") //id에 접근할 권한이 있는지 체크...session객체...?잘안쓴다고?
     public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form){
-        //html form이 그대로 넘어오나?
-        //form을 book으로 넘겨줍시다~
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
 
-        itemService.saveItem(book);
+//        //html form이 그대로 넘어오나?
+//        //form을 book으로 넘겨줍시다~
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//        itemService.saveItem(book);
+
+        //This is best
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+
         return "redirect:/items"; //edit하고나서 리스트로 가도록
     }
 
